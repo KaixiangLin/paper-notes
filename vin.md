@@ -20,7 +20,7 @@ NOTE2: A recurrent agent (e.g. with an LSTM policy), or a feedforward agent with
 
 Value Iteration is an algorithm for computing the optimal value function/policy $V^*, \pi^*$ and involves turning the Bellman equation into a recurrence:
 
-![Screen Shot 2016-08-13 at 3.26.04 PM](img/vin/Screen Shot 2016-08-13 at 3.26.04 PM.png)
+![Screen Shot 2016-08-13 at 3.26.04 PM](img/vin/Screen%20Shot%202016-08-13%20at%203.26.04%20PM.png)
 This iteration converges to $V^*$ as $n \rightarrow \infty$, which we can use to behave optimally (i.e. the optimal policy takes actions that lead to the most rewarding states, according to $V^*$). 
 
 
@@ -29,7 +29,7 @@ This iteration converges to $V^*$ as $n \rightarrow \infty$, which we can use to
 
 The paper ends up running the model on several domains, but for the sake of an effective example consider the grid-world task where the agent is at some particular position in a 2D grid and has to reach a specific goal state while also avoiding obstacles. Here is an example of the toy task:
 
- ![Screen Shot 2016-08-13 at 4.43.04 PM](img/vin/Screen Shot 2016-08-13 at 4.43.04 PM.png)
+ ![Screen Shot 2016-08-13 at 4.43.04 PM](img/vin/Screen%20Shot%202016-08-13%20at%204.43.04%20PM.png)
 
 The agent gets a reward +1 in the goal state, -1 in obstacles (black), and -0.01 for each step (so that the shortest path to the goal is an optimal solution).
 
