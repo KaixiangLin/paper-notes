@@ -41,10 +41,10 @@ The agent is implemented in a very straight-forward manner as a single neural ne
 
 First, there's the core Value Iteration **(VI) Module** which runs the recurrence formula (reproducing again):
 
-![Screen Shot 2016-08-13 at 3.26.04 PM](img/vin/Screen Shot 2016-08-13 at 3.26.04 PM.png)
+![Screen Shot 2016-08-13 at 3.26.04 PM](img/vin/Screen%20Shot%202016-08-13%20at%203.26.04%20PM.png)
 The input to this recurrence are the two arrays R (the reward array, reward for each state) and P (the dynamics array, the probabilities of transitioning to nearby states with each action), which are of course unknown to the agent, but can be predicted with neural networks as a function of the current state. This is a little funny because the networks take a _particular_ state **s** and are internally (during the forward pass) predicting the rewards and dynamics for all states and actions in the entire environment. Notice, extremely importantly and once again, that at no point are the reward and dynamics functions explicitly regressed to the observed transitions in the environment. They are just arrays of numbers that plug into value iteration recurrence module.
 
-But anyway, once we have **R,P** arrays, in the Grid-world above due to the local connectivity, value iteration can be implemented with a repeated application of convolving **P** over **R**, as these filters effectively *diffuse* the estimated reward function (**R**) through the dynamics model (**P**), followed by max pooling across the actions. If **P** is a not a function of the state, it would simply be the filters in the Conv layer. Notice that posing this as convolution also assumes that the env dynamics are position-invariant. See the diagram below on the right:![Screen Shot 2016-08-13 at 4.58.42 PM](img/vin/Screen Shot 2016-08-13 at 4.58.42 PM.png)
+But anyway, once we have **R,P** arrays, in the Grid-world above due to the local connectivity, value iteration can be implemented with a repeated application of convolving **P** over **R**, as these filters effectively *diffuse* the estimated reward function (**R**) through the dynamics model (**P**), followed by max pooling across the actions. If **P** is a not a function of the state, it would simply be the filters in the Conv layer. Notice that posing this as convolution also assumes that the env dynamics are position-invariant. See the diagram below on the right:![Screen Shot 2016-08-13 at 4.58.42 PM](img/vin/Screen%20Shot%202016-08-13%20at%204.58.42%20PM.png)
 
 Once the array of numbers that we interpret as holding the estimated $V^*$ is computed after running **K** steps of the recurrence (K is fixed beforehand. For example for a 16x16 map it is 20, since that's a bit more than the amount of steps needed to diffuse rewards across the entire map), we "pluck out" the state-action values $Q(s,.)$ at the state the agent happens to currently be in (by an "attention" operator $\psi$), and (optionally) append these Q values to the feedforward representation of the current state $\phi(s)$, and finally predicting the action distribution.
 
@@ -58,7 +58,7 @@ Once the array of numbers that we interpret as holding the estimated $V^*$ is co
 
 **Curriculum** is used during training where easier environments are trained on first. This is claimed to work better but not quantified in tables. Models are trained with TRPO, RMSProp, implemented in Theano.
 
-Results when training on **5000** random grid-world instances (hey isn't that quite a bit low?):![Screen Shot 2016-08-13 at 5.47.23 PM](img/vin/Screen Shot 2016-08-13 at 5.47.23 PM.png)
+Results when training on **5000** random grid-world instances (hey isn't that quite a bit low?):![Screen Shot 2016-08-13 at 5.47.23 PM](img/vin/Screen%20Shot%202016-08-13%20at%205.47.23%20PM.png)
 
 TLDR VIN generalizes better.
 
